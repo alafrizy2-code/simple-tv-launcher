@@ -39,14 +39,15 @@ class MainActivity : AppCompatActivity() {
                     startActivity(Intent(android.provider.Settings.ACTION_SETTINGS))
                 }
                 "apps" -> {
-                    val intent = Intent(Intent.ACTION_MAIN).apply {
-                        addCategory(Intent.CATEGORY_APP_MARKET)
-                    }
-                    try {
-                        startActivity(intent)
-                    } catch (_: Exception) {
-                        val fallback = Intent(android.provider.Settings.ACTION_SETTINGS)
-                        startActivity(fallback)
+                    // Move focus to the installed-app grid instead of trying to
+                    // open an app-store intent that may not exist on TV boxes.
+                    binding.recyclerApps.post {
+                        val firstApp = binding.recyclerApps.getChildAt(0)
+                        if (firstApp != null) {
+                            firstApp.requestFocus()
+                        } else {
+                            binding.recyclerApps.requestFocus()
+                        }
                     }
                 }
             }
