@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="bg_dark">#0A1020</color>
-    <color name="bg_secondary">#111827</color>
-    <color name="card_bg">#1E293B</color>
-    <color name="card_selected">#2563EB</color>
-    <color name="text_main">#F8FAFC</color>
-    <color name="text_secondary">#CBD5E1</color>
-    <color name="accent">#60A5FA</color>
-    <color name="soft_glow">#0F172A</color>
+    <style name="Theme.SimpleTvLauncher" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/accent</item>
+        <item name="colorPrimaryVariant">@color/bg_secondary</item>
+        <item name="colorOnPrimary">@color/text_main</item>
+        <item name="colorSecondary">@color/accent</item>
+        <item name="colorOnSecondary">@color/bg_dark</item>
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@color/bg_dark</item>
+        <item name="android:navigationBarColor">@color/bg_dark</item>
+        <item name="android:windowBackground">@color/bg_dark</item>
+    </style>
 </resources>
