@@ -1,10 +1,48 @@
-     - name: Setup Android SDK
+name: Build Android TV Launcher
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v4
         with:
-          packages: platform-tools
+          packages: |
+            platform-tools
+            platforms;android-34
+            build-tools;34.0.0
           accept-android-sdk-licenses: true
-          log-accepted-android-sdk-licenses: false
 
-      - name: Accept remaining Android SDK licenses
-        shell: bash
-        run: yes | sdkmanager --licenses
+      - name: Build debug APK
+        run: |
+          chmod +x ./gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Upload debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: simple-tv-launcher-debug
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          
